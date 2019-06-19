@@ -1,0 +1,20 @@
+//to fetch all hyperlinks from a webpage
+$links = array();
+foreach($html->find('a') as $a) {
+ $links[] = $a->href;
+}
+print_r($links);
+ 
+//to fetch all images from a webpage
+$images = array();
+foreach($html->find('img') as $img) {
+ $images[] = $img->src;
+}
+print_r($images);
+ 
+//to find h1 headers from a webpage
+$headlines = array();
+foreach($html->find('h1') as $header) {
+ $headlines[] = $header->plaintext;
+}
+print_r($headlines);

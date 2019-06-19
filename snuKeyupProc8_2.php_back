@@ -1,0 +1,64 @@
+<?php
+
+//https://www.php.net/manual/en/function.ksort.php
+//array sort
+
+$servername = "onesunny3.cafe24.com";
+$username = "onesunny3";
+$password = "gana8338";
+$dbname = "onesunny3";
+
+$str="";
+
+$test = json_decode($_POST['test']);
+
+///이게 맨 처음 시작 원리적인 핵심
+//$test2 = (array)$test[0];
+//print_r($test2);
+///이거 였다.
+
+//배열을 생성한다. 
+$disease = [];
+
+// Create connection
+
+// Check connection
+
+//echo "Connected successfully"
+
+for($i=0;$i<count((array)$test);$i++)
+{
+	$dump = (array)$test[$i];
+	//$str.=$dump['DiseaseId'];
+	$sql = "SELECT Name FROM SnuDisease WHERE Id = ".$dump['DiseaseId'];
+	//$sql = "SELECT Name FROM SnuDisease WHERE Id = 155";
+	
+	$conn = new mysqli($servername, $username, $password,$dbname);
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	} 
+
+	$result = $conn->query($sql);
+
+	if ($result->num_rows > 0) {
+		 //output data of each row
+		while($row = $result->fetch_assoc()) {
+			$str.=$row['Name'].',';
+		}
+	}
+	//$dump = (array)$test[$i];
+	//$str.=$dump['DiseaseId'];
+	//$str.=",";
+}
+
+print_r($str);
+exit;
+//print_r($test2['count']);
+//print_r($test2);
+print_r('hello');
+//echo sizeof($test);
+
+// 190329 작업 시작
+//받아온 CountData 배열에 대해서 DIseaseId를 갖고 count 된 넘버순으로 정렬하여 '병명'을 찾아서 배열을 돌려 보내주는 것이다. 
+//실시간으로 현재 우선순위로 추천되는 병명을 확인할 수 있음
+?>
